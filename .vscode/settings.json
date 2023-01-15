@@ -1,3 +1,7 @@
 {
-  "window.zoomLevel": 2
+  "window.zoomLevel": 2,
+  "terminal.integrated.tabs.defaultColor": "terminal.ansiBlack",
+  "cSpell.words": [
+    "nextjs"
+  ]
 }
