@@ -18,11 +18,13 @@ export default async function handler(req, res) {
             name,
             message
         };
-        console.log(newMessage);
-        let client
+
+        let client;
+
+        const connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.dmcghae.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
+
         try {
-            client = await MongoClient.connect('mongodb+srv://hancy:v0su8l6akgfOjSuT@cluster1.dmcghae.mongodb.net/mysite?retryWrites=true&w=majority');
-            console.log('Database Connected Succesfully');
+            client = await MongoClient.connect(connectionString);
         } catch (error) {
             res.status(500).json({ message: ("Could not connect to database") });
             return;
@@ -31,7 +33,6 @@ export default async function handler(req, res) {
         try {
             const db = client.db();
             const result = await db.collection('message').insertOne(newMessage);
-            console.log('Congratulations! Your message have been successfully delivered')
             newMessage.id = result.insertedId;
         } catch (error) {
             client.close();
